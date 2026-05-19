@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>토스모바일 신규 입사자 OJT</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --blue:#1A6FFF;--blue-dk:#0050CC;--blue-lt:#E8F1FF;
+  --navy:#0A1628;--gray:#8B95A1;--bg:#F5F8FF;--white:#fff;
+  --font:'Pretendard',-apple-system,sans-serif;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--navy);background:var(--white);overflow-x:hidden}
+button{font-family:var(--font);border:none;background:none;cursor:pointer}
+ul{list-style:none}
+.page{display:none}.page.active{display:block}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:300;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(255,255,255,.93);backdrop-filter:blur(16px);border-bottom:1px solid rgba(26,111,255,.1);transition:box-shadow .3s}
+.nav.shadow{box-shadow:0 4px 24px rgba(0,0,0,.08)}
+.nav-logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:17px;color:var(--blue);cursor:pointer}
+.nav-logo svg{width:26px;height:26px}
+.nav-links{display:flex;gap:2px}
+.nav-links button{font-size:13.5px;font-weight:500;color:#555;padding:6px 13px;border-radius:8px;transition:background .2s,color .2s}
+.nav-links button:hover{background:var(--blue-lt);color:var(--blue);font-weight:700}
+.nav-back{display:none;align-items:center;gap:6px;font-size:13.5px;font-weight:700;color:var(--blue);padding:7px 16px;border-radius:10px;background:var(--blue-lt);transition:background .2s}
+.nav-back:hover{background:#cfe0ff}
+.nav-back svg{width:15px;height:15px}
+
+/* UTIL */
+.wrap{max-width:1100px;margin:0 auto;padding:0 48px}
+.s{padding:96px 0}
+.lbl{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.ttl{font-size:clamp(28px,4vw,46px);font-weight:900;line-height:1.2;margin-bottom:14px}
+.sub{font-size:16px;color:var(--gray);line-height:1.85;max-width:580px}
+.chip{display:inline-block;background:var(--blue-lt);color:var(--blue);font-size:11.5px;font-weight:700;padding:4px 12px;border-radius:20px}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.40s}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 48px 80px;position:relative;overflow:hidden;background:linear-gradient(150deg,#040d1e 0%,#0a1f4a 52%,#0e3070 100%)}
+.hg{position:absolute;border-radius:50%;pointer-events:none}
+.hg1{width:800px;height:800px;background:radial-gradient(circle,rgba(26,111,255,.28) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);animation:gp 5s ease-in-out infinite}
+.hg2{width:380px;height:380px;background:radial-gradient(circle,rgba(26,111,255,.18) 0%,transparent 65%);top:10%;right:6%;animation:gp 7s ease-in-out infinite reverse}
+@keyframes gp{0%,100%{opacity:.7;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}}
+.h-badge{position:relative;z-index:1;display:inline-block;background:rgba(26,111,255,.18);border:1px solid rgba(26,111,255,.35);color:#7BBFFF;font-size:13px;font-weight:600;padding:6px 18px;border-radius:20px;margin-bottom:28px;animation:fu .8s both}
+.hero h1{position:relative;z-index:1;font-size:clamp(38px,6vw,74px);font-weight:900;color:#fff;line-height:1.12;margin-bottom:22px;animation:fu .8s .15s both}
+.hero h1 em{color:var(--blue);font-style:normal}
+.h-sub{position:relative;z-index:1;font-size:clamp(15px,1.8vw,19px);color:rgba(255,255,255,.6);line-height:1.8;max-width:560px;margin:0 auto 52px;animation:fu .8s .3s both}
+.h-stats{position:relative;z-index:1;display:flex;gap:52px;flex-wrap:wrap;justify-content:center;animation:fu .8s .45s both}
+.sn{font-size:38px;font-weight:900;color:var(--blue);display:block;line-height:1}
+.sl{font-size:12px;color:rgba(255,255,255,.45);margin-top:6px}
+.scue{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:1;display:flex;flex-direction:column;align-items:center;gap:5px;color:rgba(255,255,255,.35);font-size:11px;animation:bob 2.2s infinite}
+.scue svg{width:18px;height:18px}
+@keyframes fu{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* ABOUT */
+.about-sec{background:var(--bg)}
+.ag{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:52px}
+.acard{background:linear-gradient(135deg,var(--blue) 0%,var(--blue-dk) 100%);border-radius:24px;padding:44px;color:#fff;position:relative;overflow:hidden}
+.acard::before{content:'';position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.07);top:-60px;right:-60px;pointer-events:none}
+.act{font-size:18px;font-weight:800;margin-bottom:26px;position:relative;z-index:1}
+.flow{display:flex;align-items:center;gap:10px;margin-bottom:20px;position:relative;z-index:1}
+.fb{flex:1;text-align:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:10px;padding:10px 8px;font-size:12.5px;font-weight:700;line-height:1.4}
+.fa{color:rgba(255,255,255,.45);font-size:16px;flex-shrink:0}
+.an{position:relative;z-index:1;margin-top:20px;font-size:13px;opacity:.8;line-height:1.9}
+.aps{display:flex;flex-direction:column;gap:24px}
+.ap{display:flex;gap:16px;align-items:flex-start}
+.api{width:46px;height:46px;flex-shrink:0;background:var(--blue-lt);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.apt{font-size:15px;font-weight:800;margin-bottom:4px}
+.apd{font-size:13.5px;color:var(--gray);line-height:1.65}
+
+/* HISTORY */
+.tl{display:flex;position:relative;margin-top:52px}
+.tl::before{content:'';position:absolute;top:26px;left:0;right:0;height:2px;background:linear-gradient(90deg,#dae4f2,var(--blue))}
+.ti{flex:1;text-align:center;position:relative;padding-top:52px}
+.td{width:12px;height:12px;border-radius:50%;background:#dae4f2;border:2.5px solid #fff;position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:1}
+.ti:last-child .td{width:18px;height:18px;top:17px;background:var(--blue);box-shadow:0 0 0 5px rgba(26,111,255,.18)}
+.ty{font-size:13px;font-weight:800;color:var(--blue);margin-bottom:6px}
+.ti:last-child .ty{font-size:15px}
+.te{font-size:12px;color:var(--gray);line-height:1.55;padding:0 6px}
+.ti:last-child .te{color:var(--navy);font-weight:700;font-size:13px}
+
+/* ORG */
+.org-sec{background:var(--bg)}
+.otree{margin-top:52px;text-align:center}
+.oceo{display:inline-flex;flex-direction:column;align-items:center;background:var(--blue);color:#fff;border-radius:16px;padding:16px 32px;font-weight:800;font-size:15px;box-shadow:0 8px 32px rgba(26,111,255,.32)}
+.oceo small{font-weight:400;font-size:12px;opacity:.75;margin-top:3px}
+.ovl{width:2px;height:32px;background:#dae4f2;margin:0 auto}
+.odepts{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;position:relative}
+.od{background:var(--blue);color:#fff;border-radius:14px;padding:18px 8px 14px;font-size:13px;font-weight:800;cursor:pointer;position:relative;transition:transform .22s var(--ease),box-shadow .22s,background .22s}
+.od::before{content:'';position:absolute;top:-32px;left:50%;width:2px;height:32px;background:#dae4f2}
+.od:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(26,111,255,.3);background:#1460e8}
+.od small{font-weight:400;font-size:11px;opacity:.75;display:block;margin-top:3px}
+.od .go{display:inline-block;margin-top:10px;font-size:10px;background:rgba(255,255,255,.2);border-radius:10px;padding:2px 8px}
+.journey{margin-top:64px}
+.jtl{text-align:center;font-size:18px;font-weight:900;margin-bottom:28px}
+.jsteps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.js{background:var(--blue);border-radius:18px;padding:28px 24px;color:#fff;text-align:center}
+.jsn{font-size:24px;font-weight:900;opacity:.4;margin-bottom:4px}
+.jsname{font-size:15px;font-weight:800;margin-bottom:12px}
+.jsd{font-size:12px;opacity:.75;line-height:1.75}
+
+/* DEPT CARDS */
+.depts-sec{background:var(--white)}
+.dcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:52px}
+.dc{background:var(--white);border:1.5px solid #e2eaf6;border-radius:22px;padding:32px;cursor:pointer;display:flex;flex-direction:column;transition:transform .24s var(--ease),box-shadow .24s,border-color .24s}
+.dc:hover{transform:translateY(-7px);box-shadow:0 24px 56px rgba(26,111,255,.11);border-color:var(--blue)}
+.dci{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:20px}
+.dcn{font-size:18px;font-weight:900;margin-bottom:8px}
+.dct{display:flex;flex-direction:column;gap:8px;flex:1;margin-top:14px}
+.dt{font-size:13px;color:#555;display:flex;align-items:flex-start;gap:8px;line-height:1.55}
+.dt::before{content:'→';color:var(--blue);flex-shrink:0;margin-top:1px}
+.dcc{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:22px;padding:10px;background:var(--blue-lt);border-radius:10px;font-size:13px;font-weight:700;color:var(--blue);transition:background .2s}
+.dc:hover .dcc{background:#cfe0ff}
+.dcc svg{width:14px;height:14px}
+
+/* BENEFITS */
+.bens-sec{background:var(--navy)}
+.bens-sec .ttl{color:#fff}.bens-sec .lbl{color:#7BBFFF}
+.bg2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:52px}
+.bc{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:18px;padding:28px 24px;transition:background .24s,border-color .24s}
+.bc:hover{background:rgba(26,111,255,.14);border-color:rgba(26,111,255,.38)}
+.bi{font-size:30px;margin-bottom:14px}
+.bn{font-size:15px;font-weight:800;color:#fff;margin-bottom:6px}
+.bd{font-size:13px;color:rgba(255,255,255,.48);line-height:1.65}
+
+/* FOOTER */
+.foot{background:var(--blue);text-align:center;padding:64px 48px;color:#fff}
+.foot h2{font-size:clamp(20px,3.5vw,36px);font-weight:900;line-height:1.35;margin-bottom:14px}
+.foot p{font-size:14.5px;opacity:.65}
+.foot-c{margin-top:36px;font-size:11.5px;opacity:.35}
+
+/* DEPT DETAIL */
+.dpage{padding-top:58px}
+.dh{min-height:52vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 48px 60px;position:relative;overflow:hidden}
+.dhbg{position:absolute;inset:0;z-index:0;background:linear-gradient(150deg,#040d1e 0%,#0a1f4a 60%,#0e3070 100%)}
+.dhglow{position:absolute;z-index:0;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(26,111,255,.3) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);animation:gp 5s ease-in-out infinite}
+.dhc{position:relative;z-index:1}
+.dh-ico{font-size:52px;margin-bottom:18px;display:block}
+.dh-lbl{display:inline-block;background:rgba(26,111,255,.2);border:1px solid rgba(26,111,255,.4);color:#7BBFFF;font-size:12px;font-weight:700;padding:5px 16px;border-radius:20px;margin-bottom:18px}
+.dh h1{font-size:clamp(30px,5vw,58px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:14px}
+.dh h1 em{color:var(--blue);font-style:normal}
+.dh-sub{font-size:16px;color:rgba(255,255,255,.6);line-height:1.8;max-width:520px;margin:0 auto}
+.vs{background:var(--bg)}
+.vg{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:44px}
+.vc{background:var(--white);border:1.5px solid #e2eaf6;border-radius:18px;padding:28px 22px;transition:border-color .22s,box-shadow .22s}
+.vc:hover{border-color:var(--blue);box-shadow:0 12px 36px rgba(26,111,255,.1)}
+.vci{font-size:28px;margin-bottom:12px}
+.vct{font-size:15px;font-weight:800;margin-bottom:6px}
+.vcd{font-size:13px;color:var(--gray);line-height:1.65}
+.tks{background:var(--white)}
+.tklist{display:flex;flex-direction:column;gap:14px;margin-top:44px}
+.tr{display:flex;align-items:flex-start;gap:16px;background:var(--bg);border-radius:14px;padding:20px 24px;border-left:4px solid var(--blue);transition:transform .2s}
+.tr:hover{transform:translateX(4px)}
+.tnum{width:28px;height:28px;flex-shrink:0;background:var(--blue);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;margin-top:1px}
+.tt{font-size:15px;font-weight:800;margin-bottom:4px}
+.td2{font-size:13.5px;color:var(--gray);line-height:1.65}
+.ks{background:var(--navy)}
+.ks .ttl{color:#fff}.ks .lbl{color:#7BBFFF}
+.kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:44px}
+.kc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px 20px;text-align:center}
+.kv{font-size:36px;font-weight:900;color:var(--blue);display:block;line-height:1}
+.kl{font-size:13px;color:rgba(255,255,255,.5);margin-top:8px}
+.cls{background:var(--bg)}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:44px}
+.cc{background:var(--white);border-radius:16px;padding:22px 20px;border:1.5px solid #e2eaf6;transition:border-color .2s}
+.cc:hover{border-color:var(--blue)}
+.ccn{font-size:14px;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.ccd{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0}
+.ccp{font-size:12.5px;color:var(--gray);line-height:1.6}
+.bbar{background:var(--blue);padding:28px 48px;display:flex;align-items:center;justify-content:center}
+.bbtn{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:14px;font-weight:700;font-family:var(--font);padding:12px 28px;border-radius:12px;cursor:pointer;transition:background .2s}
+.bbtn:hover{background:rgba(255,255,255,.25)}
+.bbtn svg{width:16px;height:16px}
+
+@media(max-width:768px){
+  .nav{padding:0 20px}.nav-links{display:none}
+  .wrap{padding:0 20px}.s{padding:64px 0}
+  .ag{grid-template-columns:1fr;gap:32px}
+  .tl{flex-direction:column;gap:20px}.tl::before{display:none}
+  .ti{padding-top:0;padding-left:44px;text-align:left}.td{left:0;top:2px;transform:none}
+  .odepts{grid-template-columns:repeat(2,1fr)}
+  .jsteps{grid-template-columns:1fr}
+  .dh{padding:64px 20px 44px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-logo" onclick="gomain()">
+    <svg viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="13" fill="#1A6FFF"/><path d="M7 13.5C7 10.46 9.46 8 12.5 8H19v2.5H12.5a2.5 2.5 0 000 5H19V18H12.5C9.46 18 7 15.54 7 12.5z" fill="white"/></svg>
+    toss mobile
+  </div>
+  <ul class="nav-links" id="mnav">
+    <li><button onclick="sc('about')">소개</button></li>
+    <li><button onclick="sc('history')">연혁</button></li>
+    <li><button onclick="sc('org')">조직도</button></li>
+    <li><button onclick="sc('depts')">5대 핵심 축</button></li>
+    <li><button onclick="sc('benefits')">복리후생</button></li>
+  </ul>
+  <button class="nav-back" id="nback" onclick="gomain()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+    메인으로
+  </button>
+</nav>
+
+<!-- ===== MAIN PAGE ===== -->
+<div class="page active" id="page-main">
+
+<section class="hero">
+  <div class="hg hg1"></div><div class="hg hg2"></div>
+  <div class="h-badge">🎉 토스모바일 신규 입사자 OJT</div>
+  <h1>통신의 새로운 기준을<br><em>함께 만들어요</em></h1>
+  <p class="h-sub">대한민국 3,000만 가입자의 토스 생태계 안에서,<br>가장 직관적이고 혁신적인 통신 경험을 설계합니다.</p>
+  <div class="h-stats">
+    <div><span class="sn">3,000만</span><div class="sl">토스 누적 가입자</div></div>
+    <div><span class="sn">76%</span><div class="sl">생산연령인구 가입률</div></div>
+    <div><span class="sn">90%</span><div class="sl">2030 선택 금융 플랫폼</div></div>
+    <div><span class="sn">7,000+</span><div class="sl">전국 위탁판매점</div></div>
+  </div>
+  <div class="scue">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>스크롤
+  </div>
+</section>
+
+<section class="about-sec s" id="about">
+  <div class="wrap">
+    <div class="lbl">ABOUT TOSS MOBILE</div>
+    <h2 class="ttl">알뜰폰(MVNO)<br>가치 창출의 원리</h2>
+    <p class="sub">이동통신 3사의 망을 임대하여 동일한 통화 품질로, 토스만의 혁신적 경험을 더합니다.</p>
+    <div class="ag rv">
+      <div class="acard">
+        <div class="act">🔗 서비스 구조</div>
+        <div class="flow">
+          <div class="fb">MNO<br><small style="font-weight:400;opacity:.8">SKT·KT·LGU+</small></div>
+          <div class="fa">→</div>
+          <div class="fb" style="background:rgba(255,255,255,.24)">Toss Mobile<br><small style="font-weight:400;opacity:.8">MVNO</small></div>
+          <div class="fa">→</div>
+          <div class="fb">고객<br><small style="font-weight:400;opacity:.8">USIM/eSIM</small></div>
+        </div>
+        <div class="an">✓ 통신망 도매 대가 지불<br>✓ 쉬운 개통 · 직관적 요금제 설계<br>✓ 토스 앱 연동으로 편의성 극대화</div>
+      </div>
+      <div class="aps">
+        <div class="ap"><div class="api">📡</div><div><div class="apt">동일한 통화 품질</div><div class="apd">SKT·KT·LGU+ 3사 망 MVNO 기반으로 일반 통신사와 동일한 품질을 제공합니다.</div></div></div>
+        <div class="ap"><div class="api">💰</div><div><div class="apt">합리적인 요금</div><div class="apd">USIM/eSIM 교체만으로 저렴한 통신비와 토스 앱의 편리함을 동시에 누립니다.</div></div></div>
+        <div class="ap"><div class="api">🚀</div><div><div class="apt">토스 생태계 연계</div><div class="apd">3,000만 MAU 토스 앱 내에서 가입·관리·결제까지 완결되는 경험을 제공합니다.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="history" style="background:var(--white)">
+  <div class="wrap">
+    <div class="lbl">HISTORY</div>
+    <h2 class="ttl">MVNO 1세대에서<br>통신의 미래까지</h2>
+    <p class="sub">1998년 창립 이래 24년간 쌓아온 통신 인프라와 토스의 혁신 DNA가 만났습니다.</p>
+    <div class="tl rv">
+      <div class="ti"><div class="td"></div><div class="ty">1998.10</div><div class="te">머천드코리아 설립<br>오프라인 통신 유통망 개척</div></div>
+      <div class="ti"><div class="td"></div><div class="ty">2012.04</div><div class="te">LGU+ MVNO 1호<br>알뜰폰 도매협정 체결</div></div>
+      <div class="ti"><div class="td"></div><div class="ty">2015.04</div><div class="te">KT MVNO<br>협정 체결</div></div>
+      <div class="ti"><div class="td"></div><div class="ty">2020.07</div><div class="te">SKT MVNO 협정 체결<br>이통 3사 망 완비</div></div>
+      <div class="ti"><div class="td"></div><div class="ty">2022.10</div><div class="te">토스 자회사 편입<br>'토스모바일' 출범</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 조직도 — 5대 핵심 축 앞 -->
+<section class="org-sec s" id="org">
+  <div class="wrap">
+    <div class="lbl">ORGANIZATION</div>
+    <h2 class="ttl">토스모바일 조직도</h2>
+    <p class="sub">5개 부서가 원팀(One-Team)으로 유기적으로 연결됩니다.<br>각 부서를 클릭하면 상세 내용을 확인할 수 있습니다.</p>
+    <div class="otree rv">
+      <div class="oceo">토스모바일 리더<small>이승훈</small></div>
+      <div class="ovl"></div>
+      <div class="odepts">
+        <div class="od" onclick="dept('sales')">영업<small>이경환</small><div class="go">자세히 보기 →</div></div>
+        <div class="od" onclick="dept('mkt')">사업전략&amp;마케팅<small>박건홍</small><div class="go">자세히 보기 →</div></div>
+        <div class="od" onclick="dept('it')">IT &amp; 정보보호<small>강진희</small><div class="go">자세히 보기 →</div></div>
+        <div class="od" onclick="dept('cs')">고객센터<small>김미란</small><div class="go">자세히 보기 →</div></div>
+        <div class="od" onclick="dept('admin')">경영지원<small>김상훈</small><div class="go">자세히 보기 →</div></div>
+      </div>
+    </div>
+    <div class="journey rv">
+      <div class="jtl">고객 여정과 부서 역할</div>
+      <div class="jsteps">
+        <div class="js"><div class="jsn">01</div><div class="jsname">유입 / 가입</div><div class="jsd">마케팅 (온라인 프로모션)<br>+ 영업 (오프라인 판매점 확장)</div></div>
+        <div class="js"><div class="jsn">02</div><div class="jsname">개통 / 인프라</div><div class="jsd">IT/정보보호 (개인정보 처리 및 개통 시스템)<br>+ 경영지원 (USIM 물류 및 재고 관리)</div></div>
+        <div class="js"><div class="jsn">03</div><div class="jsname">사용 / 케어</div><div class="jsd">고객센터 (최상위 CX 및 VOC 수집)<br>+ IT (실시간 사용량 연동)<br>+ 경영지원 (수익 정산 및 HR)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5대 핵심 축 -->
+<section class="depts-sec s" id="depts">
+  <div class="wrap">
+    <div class="lbl">5 CORE PILLARS</div>
+    <h2 class="ttl">토스모바일을 이끄는<br>5대 핵심 축</h2>
+    <p class="sub">각 부서 카드를 클릭하면 업무 상세 내용을 확인할 수 있습니다.</p>
+    <div class="dcards">
+      <div class="dc rv d1" onclick="dept('sales')">
+        <div class="dci" style="background:#EEF4FF">🤝</div>
+        <div class="dcn">영업</div><div><span class="chip">오프라인 성장</span></div>
+        <div class="dct">
+          <div class="dt">전국 7,000개 위탁판매 및 대리점 네트워크</div>
+          <div class="dt">오프라인 유통망 확대 및 선/후불 회선 영업</div>
+          <div class="dt">서울·영남·광주 지점 직영 운영</div>
+        </div>
+        <div class="dcc">상세 보기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+      <div class="dc rv d2" onclick="dept('mkt')">
+        <div class="dci" style="background:#FFF0F0">📢</div>
+        <div class="dcn">사업전략&amp;마케팅</div><div><span class="chip">온라인 성장</span></div>
+        <div class="dct">
+          <div class="dt">토스 앱 기반 3,000만 트래픽 다이렉트 전환</div>
+          <div class="dt">마이알뜰폰·알닷·모요 외부 채널 연계</div>
+          <div class="dt">시즈널 이벤트 및 바이럴 마케팅 캠페인</div>
+        </div>
+        <div class="dcc">상세 보기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+      <div class="dc rv d3" onclick="dept('it')">
+        <div class="dci" style="background:#F0FFF4">🛡️</div>
+        <div class="dcn">IT &amp; 정보보호</div><div><span class="chip">기술 기반 성장</span></div>
+        <div class="dct">
+          <div class="dt">Admin 시스템 및 대리점 홈페이지 무중단 운영</div>
+          <div class="dt">안전한 서비스 개발 및 인프라 구축</div>
+          <div class="dt">ISMS 기반 철저한 개인정보 보호</div>
+        </div>
+        <div class="dcc">상세 보기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+      <div class="dc rv d4" onclick="dept('cs')">
+        <div class="dci" style="background:#FFF8EC">🎧</div>
+        <div class="dcn">고객센터</div><div><span class="chip">고객 경험</span></div>
+        <div class="dct">
+          <div class="dt">전문 상담원을 통한 고객 응대 및 민원 처리</div>
+          <div class="dt">VOC 심층 분석으로 Pain-point 발굴</div>
+          <div class="dt">서비스 개선 피드백을 타 부서로 연결</div>
+        </div>
+        <div class="dcc">상세 보기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+      <div class="dc rv d5" onclick="dept('admin')">
+        <div class="dci" style="background:#F5F0FF">🏢</div>
+        <div class="dcn">경영지원</div><div><span class="chip">운영 안정성</span></div>
+        <div class="dct">
+          <div class="dt">재무/회계(FP&amp;A) — 자금 및 급여 관리</div>
+          <div class="dt">정산 — 전국 7,000개 판매점 수익 정산</div>
+          <div class="dt">물류/재고(USIM) 실시간 무오차 관리</div>
+        </div>
+        <div class="dcc">상세 보기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bens-sec s" id="benefits">
+  <div class="wrap">
+    <div class="lbl">BENEFITS</div>
+    <h2 class="ttl">최고의 동료를 위한<br>아낌없는 지원</h2>
+    <div class="bg2 rv">
+      <div class="bc"><div class="bi">🍱</div><div class="bn">식비 지원</div><div class="bd">점심 식대 월 30만 원 지원. 정직원 전환 시 개별 법인카드 지급.</div></div>
+      <div class="bc"><div class="bi">🌴</div><div class="bn">리프레시 휴가</div><div class="bd">연차, 출산/육아휴직, 경조사 및 특별휴가 등 다양한 휴가 제도.</div></div>
+      <div class="bc"><div class="bi">☕</div><div class="bn">무제한 스낵바</div><div class="bd">최고급 원두 커피와 간식이 가득한 사내 라운지 무제한 이용.</div></div>
+      <div class="bc"><div class="bi">📱</div><div class="bn">통신비 100% 지원</div><div class="bd">토스모바일 전 요금제 전액 지원. 내 손안의 통신을 직접 경험.</div></div>
+      <div class="bc"><div class="bi">🎁</div><div class="bn">제휴 할인 및 지원</div><div class="bd">경조사비 지급 및 대기업 제휴 할인 (여기어때, 쏘카, LG전자 임직원몰 등).</div></div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <h2>내 손 안의 통신 세상을 넘어,<br>대한민국 통신의 새로운 기준이 됩니다.</h2>
+  <p>토스모바일의 혁신적인 여정에 합류하신 것을 진심으로 환영합니다.</p>
+  <div class="foot-c">Toss Mobile. All rights reserved.</div>
+</footer>
+</div>
+
+<!-- ===== 영업 ===== -->
+<div class="page dpage" id="page-sales">
+<section class="dh"><div class="dhbg"></div><div class="dhglow"></div>
+  <div class="dhc">
+    <span class="dh-ico">🤝</span>
+    <div class="dh-lbl">SALES · 오프라인 성장</div>
+    <h1>전국을 그물망처럼<br><em>연결하는 영업</em></h1>
+    <p class="dh-sub">현장 기반의 안정적 가입자 확보와 판매점 네트워크 강화를 통해 압도적 오프라인 시장 점유율을 만듭니다.</p>
+  </div>
+</section>
+<section class="vs s"><div class="wrap">
+  <div class="lbl">CORE VALUE</div><h2 class="ttl">영업의 핵심 가치</h2>
+  <div class="vg">
+    <div class="vc rv"><div class="vci">🏪</div><div class="vct">전국망 기반 위탁판매</div><div class="vcd">10여 년간 구축된 전국 약 7,000여 개 거래처와의 강력한 파트너십으로 오프라인 시장을 장악합니다.</div></div>
+    <div class="vc rv d1"><div class="vci">🏢</div><div class="vct">탄탄한 직영 거점 체계</div><div class="vcd">본사영업팀을 필두로 영남지점(부산/대구/김해)과 광주지점 등 권역별 촘촘한 관리 인프라를 운영합니다.</div></div>
+    <div class="vc rv d2"><div class="vci">🎯</div><div class="vct">현장 서포트 (개통실&amp;영업지원)</div><div class="vcd">가입 및 개통 즉각 처리, 홍보물 배포 지원으로 판매점 영업 극대화.</div></div>
+  </div>
+</div></section>
+<section class="tks s"><div class="wrap">
+  <div class="lbl">MAIN TASKS</div><h2 class="ttl">주요 업무</h2>
+  <div class="tklist">
+    <div class="tr rv"><div class="tnum">1</div><div><div class="tt">오프라인 유통망 확대</div><div class="td2">전국 위탁판매점 및 대리점 신규 발굴, 기존 거래처 관계 강화, 판매점 네트워크 품질 관리</div></div></div>
+    <div class="tr rv"><div class="tnum">2</div><div><div class="tt">선/후불 회선 영업</div><div class="td2">선불폰·후불폰 회선 영업 전략 수립 및 실행, 판매 목표 달성을 위한 채널별 전략 운영</div></div></div>
+    <div class="tr rv"><div class="tnum">3</div><div><div class="tt">판매점 네트워크 강화</div><div class="td2">판매점 교육, 홍보물 지원, 인센티브 설계를 통해 파트너사의 적극적인 판매를 유도</div></div></div>
+    <div class="tr rv"><div class="tnum">4</div><div><div class="tt">개통실 &amp; 영업지원</div><div class="td2">신규 가입 및 번호이동 개통 처리, 영업 관련 문의 대응, 현장 지원 업무 수행</div></div></div>
+  </div>
+</div></section>
+<section class="ks s"><div class="wrap">
+  <div class="lbl">KEY NUMBERS</div><h2 class="ttl">영업의 숫자</h2>
+  <div class="kg rv">
+    <div class="kc"><span class="kv">7,000+</span><div class="kl">전국 위탁판매 및 대리점</div></div>
+    <div class="kc"><span class="kv">3</span><div class="kl">직영 지점 (서울·영남·광주)</div></div>
+    <div class="kc"><span class="kv">10년+</span><div class="kl">오프라인 유통 노하우</div></div>
+  </div>
+</div></section>
+<section class="cls s"><div class="wrap">
+  <div class="lbl">COLLABORATION</div><h2 class="ttl">협업 부서</h2>
+  <div class="cg rv">
+    <div class="cc"><div class="ccn"><div class="ccd"></div>경영지원</div><div class="ccp">판매점 수익 정산, USIM 재고 공급 및 물류 지원</div></div>
+    <div class="cc"><div class="ccn"><div class="ccd"></div>사업전략&amp;마케팅</div><div class="ccp">오프라인·온라인 투-트랙 성장 전략 공동 수립</div></div>
+    <div class="cc"><div class="ccn"><div class="ccd"></div>IT &amp; 정보보호</div><div class="ccp">개통 시스템 안정성 확보, 대리점 홈페이지 운영 지원</div></div>
+  </div>
+</div></section>
+<div class="bbar"><button class="bbtn" onclick="gomain()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>메인으로 돌아가기</button></div>
+</div>
+
+<!-- ===== 사업전략&마케팅 ===== -->
+<div class="page dpage" id="page-mkt">
+<section class="dh"><div class="dhbg"></div><div class="dhglow"></div>
+  <div class="dhc">
+    <span class="dh-ico">📢</span>
+    <div class="dh-lbl">MARKETING · 온라인 성장</div>
+    <h1>데이터를 기반으로<br><em>성장을 설계하는</em> 마케팅</h1>
+    <p class="dh-sub">디지털 채널 확장을 통한 신규 고객 유입 극대화 및 트렌디한 통신 브랜드를 구축합니다.</p>
+  </div>
+</section>
+<section class="vs s"><div class="wrap">
+  <div class="lbl">CORE VALUE</div><h2 class="ttl">마케팅의 핵심 가치</h2>
+  <div class="vg">
+    <div class="vc rv"><div class="vci">📱</div><div class="vct">토스 앱 기반 회선 판매</div><div class="vcd">3,000만 앱 트래픽을 활용한 유입→전환→개통 퍼널 최적화 전략을 설계합니다.</div></div>
+    <div class="vc rv d1"><div class="vci">🔗</div><div class="vct">폭발적 외부 채널 제휴</div><div class="vcd">마이알뜰폰, 알닷, 모요, U+파트너스 등 외부 플랫폼 연계를 통한 신규 유입 극대화.</div></div>
+    <div class="vc rv d2"><div class="vci">🎯</div><div class="vct">타겟 캠페인 및 프로모션</div><div class="vcd">매월 시즈널 이벤트, SPOT성 바이럴 마케팅, 0원 요금제 등 공격적 브랜드 인지도 제고.</div></div>
+  </div>
+</div></section>
+<section class="tks s"><div class="wrap">
+  <div class="lbl">MAIN TASKS</div><h2 class="ttl">주요 업무</h2>
+  <div class="tklist">
+    <div class="tr rv"><div class="tnum">1</div><div><div class="tt">토스 앱 기반 판매 전략</div><div class="td2">3,000만 MAU 토스 앱 내 다이렉트 전환 전략 수립, 유입→전환→개통 퍼널 최적화 및 실행</div></div></div>
+    <div class="tr rv"><div class="tnum">2</div><div><div class="tt">외부 채널(알닷 등) 운영</div><div class="td2">마이알뜰폰, 알닷, 모요, U+파트너스 등 외부 플랫폼과의 제휴 채널 운영 및 성과 관리</div></div></div>
+    <div class="tr rv"><div class="tnum">3</div><div><div class="tt">프로모션 캠페인</div><div class="td2">월별 시즈널 이벤트 기획·운영, SPOT성 바이럴 마케팅, 스폰서 광고 및 커뮤니티 마케팅 집행</div></div></div>
+    <div class="tr rv"><div class="tnum">4</div><div><div class="tt">사업 전략 수립</div><div class="td2">시장 분석, 경쟁사 모니터링, 요금제 전략 기획, 신규 사업 기회 발굴 및 중장기 성장 전략 수립</div></div></div>
+  </div>
+</div></section>
+<section class="ks s"><div class="wrap">
+  <div class="lbl">KEY NUMBERS</div><h2 class="ttl">마케팅의 숫자</h2>
+  <div class="kg rv">
+    <div class="kc"><span class="kv">3,000만</span><div class="kl">MAU 토스 앱 트래픽</div></div>
+    <div class="kc"><span class="kv">4+</span><div class="kl">외부 제휴 플랫폼</div></div>
+    <div class="kc"><span class="kv">매월</span><div class="kl">시즈널 캠페인 운영</div></div>
+  </div>
+</div></section>
+<section class="cls s"><div class="wrap">
+  <div class="lbl">COLLABORATION</div><h2 class="ttl">협업 부서</h2>
+  <div class="cg rv">
+    <div class="cc"><div class="ccn"><div class="ccd"></div>영업</div><div class="ccp">오프라인·온라인 투-트랙 성장 전략 공동 수립 및 실행</div></div>
+    <div class="cc"><div class="ccn"><div class="ccd"></div>IT &amp; 정보보호</div><div class="ccp">앱 내 마케팅 기능 개발 및 데이터 분석 인프라 구축 협력</div></div>
+    <div class="cc"><div class="ccn"><div class="ccd"></div>고객센터</div><div class="ccp">캠페인 문의 대응 준비, VOC를 통한 마케팅 메시지 개선</div></div>
+  </div>
+</div></section>
+<div class="bbar"><button class="bbtn" onclick="gomain()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>메인으로 돌아가기</button></div>
+</div>
+
+<!-- ===== IT & 정보보호 ===== -->
+<div class="page dpage" id="page-it">
+<section class="dh"><div class="dhbg"></div><div class="dhglow"></div>
+  <div class="dhc">
+    <span class="dh-ico">🛡️</span>
+    <div class="dh-lbl">IT &amp; SECURITY · 기술 기반 성장</div>
+    <h1>무결점 서비스를<br><em>수호하는</em> 기술 방패</h1>
+    <p class="dh-sub">확장 가능한 유연한 기술 기반 아래, 타협 없는 서비스 안정성과 강력한 데이터 보호를 구현합니다.</p>
+  </div>
+</section>
+<section class="vs s"><div class="wrap">
+  <div class="lbl">THREE PILLARS</div><h2 class="ttl">IT&amp;정보보호의 3대 기둥</h2>
+  <div class="vg">
+    <div class="vc rv"><div class="vci">⚙️</div><div class="vct">Pillar 1. IT운영 / IT보안</div><div class="vcd">Admin 시스템 및 대리점 홈페이지 무중단 유지보수. 토스코어와 이글루(E-GLU) 위협 모니터링 연동.</div></div>
+    <div class="vc rv d1"><div class="vci">💻</div><div class="vct">Pillar 2. IT개발 (개발보안)</div><div class="vcd">안전한 서비스 개발, 시스템 인프라 구축 및 모의해킹/취약점 점검을 통한 철통 방어.</div></div>
+    <div class="vc rv d2"><div class="vci">🔒</div><div class="vct">Pillar 3. 개인정보보호 (Privacy)</div><div class="vcd">고객의 금융/통신 데이터를 완벽하게 보호하는 규제 준수 및 개인정보 처리방침 관리.</div></div>
+  </div>
+</div></section>
+<section class="tks s"><div class="wrap">
+  <div class="lbl">MAIN TASKS</div><h2 class="ttl">주요 업무</h2>
+  <div class="tklist">
+    <div class="tr rv"><div class="tnum">1</div><div><div class="tt">시스템 인프라 구축 및 운영</div><div class="td2">Admin 시스템, 대리점 홈페이지 등 핵심 시스템 무중단 유지보수 및 신규 인프라 구축</div></div></div>
+    <div class="tr rv"><div class="tnum">2</div><div><div class="tt">서비스 개발</div><div class="td2">개통 시스템, 사용량 실시간 연동, 앱 내 통신 기능 등 고객 경험과 직결되는 서비스 개발</div></div></div>
+    <div class="tr rv"><div class="tnum">3</div><div><div class="tt">ISMS 기반 정보보안</div><div class="td2">CISO 산하 전사 정보보호위원회 운영, ISMS 인증 유지, 모의해킹 및 취약점 점검으로 보안 강화</div></div></div>
+    <div class="tr rv"><div class="tnum">4</div><div><div class="tt">개인정보 보호</div><div class="td2">통신·금융 데이터 처리 규제 준수, 개인정보 처리방침 관리, 데이터 보호 교육 및 감사 수행</div></div></div>
+  </div>
+</div></section>
+<section class="ks s"><div class="wrap">
+  <div class="lbl">KEY NUMBERS</div><h2 class="ttl">IT의 숫자</h2>
+  <div class="kg rv">
+    <div class="kc"><span class="kv">3</span><div class="kl">IT 핵심 기둥 (운영·개발·개인정보)</div></div>
+    <div class="kc"><span class="kv">ISMS</span><div class="kl">정보보호 인증 기반 인프라</div></div>
+    <div class="kc"><span class="kv">99.9%</span><div class="kl">목표 시스템 가동률</div></div>
+  </div>
+</div></section>
+<section class="cls s"><div class="wrap">
+  <div class="lbl">COLLABORATION</div><h2 class="ttl">협업 부서</h2>
+  <div class="cg rv">
+    <div class="cc"><div class="ccn"><div class="ccd"></div>영업</div><div class="ccp">대리점 홈페이지 및 개통 시스템 안정적 운영 지원</div></div>
+    <div class="cc"><div class="ccn"><div class="ccd"></div>사업전략&amp;마케팅</div><div class="ccp">앱 내 마케팅 기능 개발, 데이터 분석 인프라 제공</div></div>
+    <div class="cc"><div class="ccn"><div class="ccd"></div>고객센터</div><div class="ccp">실시간 사용량 데이터 연동, 고객 시스템 오류 대응 지원</div></div>
+    <div class="cc"><div class="ccn"><div class="ccd"></div>경영지원</div><div class="ccp">정산 시스템 운영, 전사 IT 자산 및 보안 정책 관리</div></div>
+  </div>
+</div></section>
+<div class="bbar"><button class="bbtn" onclick="gomain()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>메인으로 돌아가기</button></div>
+</div>
+
+<!-- ===== 고객센터 ===== -->
+<div class="page dpage" id="page-cs">
+<section class="dh"><div class="dhbg"></div><div class="dhglow"></div>
+  <div class="dhc">
+    <span class="dh-ico">🎧</span>
+    <div class="dh-lbl">CUSTOMER CENTER · 고객 경험</div>
+    <h1>완벽한 고객 경험(CX)을<br><em>완성하는</em> 신뢰의 접점</h1>
+    <p class="dh-sub">"우리는 방어 조직이 아닙니다. 고객 만족을 극대화하여 토스모바일의 신뢰 자산을 쌓는 핵심 앰버서더입니다."</p>
+  </div>
+</section>
+<section class="vs s"><div class="wrap">
+  <div class="lbl">CORE VALUE</div><h2 class="ttl">고객센터의 핵심 가치</h2>
+  <div class="vg">
+    <div class="vc rv"><div class="vci">📞</div><div class="vct">완벽한 응대 (Customer Care)</div><div class="vcd">전문 상담원과 시스템을 통한 고객 상담 및 인원 처리. 복잡한 통신 서비스 이용을 쉽고 명확하게 지원.</div></div>
+    <div class="vc rv d1"><div class="vci">🔍</div><div class="vct">통찰의 수집 (VOC Analysis)</div><div class="vcd">고객의 목소리(VOC)를 단순 기록에 그치지 않고 심층 분석하여 서비스 Pain-point를 발굴.</div></div>
+    <div class="vc rv d2"><div class="vci">📈</div><div class="vct">서비스 진화 (Improvement)</div><div class="vcd">분석된 데이터를 타 부서로 피드백하여 실질적인 서비스 및 품질 개선으로 연결하는 선순환 구조.</div></div>
+  </div>
+</div></section>
+<section class="tks s"><div class="wrap">
+  <div class="lbl">MAIN TASKS</div><h2 class="ttl">주요 업무</h2>
+  <div class="tklist">
+    <div class="tr rv"><div class="tnum">1</div><div><div class="tt">고객 상담 (CX)</div><div class="td2">전화·채팅·이메일 등 다채널 고객 문의 응대, 요금제·개통·단말기 관련 안내 및 민원 처리</div></div></div>
+    <div class="tr rv"><div class="tnum">2</div><div><div class="tt">민원 / VOC 분석</div><div class="td2">고객 불만 및 개선 요청 수집·분류·분석, 반복 문의 패턴 파악을 통한 Pain-point 도출</div></div></div>
+    <div class="tr rv"><div class="tnum">3</div><div><div class="tt">서비스 개선 피드백</div><div class="td2">분석된 VOC를 IT·마케팅·영업 부서에 공유하여 실질적 서비스 품질 개선으로 연결</div></div></div>
+    <div class="tr rv"><div class="tnum">4</div><div><div class="tt">상담 품질 관리 (QA)</div><div class="td2">상담 녹취 모니터링, 상담원 교육 및 코칭, 응대 매뉴얼 업데이트를 통한 서비스 수준 유지</div></div></div>
+  </div>
+</div></section>
+<section class="ks s"><div class="wrap">
+  <div class="lbl">KEY NUMBERS</div><h2 class="ttl">고객센터의 숫자</h2>
+  <div class="kg rv">
+    <div class="kc"><span class="kv">∞</span><div class="kl">고객 신뢰 자산 축적</div></div>
+    <div class="kc"><span class="kv">VOC</span><div class="kl">데이터 기반 서비스 진화</div></div>
+    <div class="kc"><span class="kv">CX</span><div class="kl">최상위 고객 경험 제공</div></div>
+  </div>
+</div></section>
+<section class="cls s"><div class="wrap">
+  <div class="lbl">COLLABORATION</div><h2 class="ttl">협업 부서</h2>
+  <div class="cg rv">
+    <div class="cc"><div class="ccn"><div class="ccd"></div>IT &amp; 정보보호</div><div class="ccp">시스템 오류 즉각 대응, 실시간 사용량 데이터 연동 지원</div></div>
+    <div class="cc"><div class="ccn"><div class="ccd"></div>사업전략&amp;마케팅</div><div class="ccp">VOC 기반 마케팅 메시지 개선, 캠페인 문의 대응 준비</div></div>
+    <div class="cc"><div class="ccn"><div class="ccd"></div>영업</div><div class="ccp">판매점 고객 불만 이슈 공유, 현장 서비스 개선 협력</div></div>
+    <div class="cc"><div class="ccn"><div class="ccd"></div>경영지원</div><div class="ccp">고객 환불·정산 관련 이슈 처리 협력</div></div>
+  </div>
+</div></section>
+<div class="bbar"><button class="bbtn" onclick="gomain()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>메인으로 돌아가기</button></div>
+</div>
+
+<!-- ===== 경영지원 ===== -->
+<div class="page dpage" id="page-admin">
+<section class="dh"><div class="dhbg"></div><div class="dhglow"></div>
+  <div class="dhc">
+    <span class="dh-ico">🏢</span>
+    <div class="dh-lbl">MANAGEMENT SUPPORT · 운영 안정성</div>
+    <h1>회사의 성장 동력을<br><em>떠받치는</em> 견고한 기반</h1>
+    <p class="dh-sub">리스크를 통제하고 조직 운영의 효율성을 극대화하여 흔들림 없는 재무적·물리적 안정성을 확보합니다.</p>
+  </div>
+</section>
+<section class="vs s"><div class="wrap">
+  <div class="lbl">CORE VALUE</div><h2 class="ttl">경영지원의 핵심 가치</h2>
+  <div class="vg">
+    <div class="vc rv"><div class="vci">💼</div><div class="vct">재무/회계 (FP&amp;A)</div><div class="vcd">자금 및 급여 관리, 정확한 재무 예측을 통한 전사 재무 건전성 확보.</div></div>
+    <div class="vc rv d1"><div class="vci">📊</div><div class="vct">정산 관리</div><div class="vcd">전국 7,000개 오프라인 판매점과의 투명하고 신속한 수익 정산 시스템 운영.</div></div>
+    <div class="vc rv d2"><div class="vci">📦</div><div class="vct">물류/재고 (USIM)</div><div class="vcd">끊임없는 가입자를 위한 유심(USIM) 물류망 및 재고의 오차 없는 실시간 관리.</div></div>
+    <div class="vc rv d3"><div class="vci">👥</div><div class="vct">인사/총무 &amp; 대관 (GA)</div><div class="vcd">효율적인 조직 운영과 리스크 관리, 외부 기관 대응을 통한 안정적 경영 환경 조성.</div></div>
+  </div>
+</div></section>
+<section class="tks s"><div class="wrap">
+  <div class="lbl">MAIN TASKS</div><h2 class="ttl">주요 업무</h2>
+  <div class="tklist">
+    <div class="tr rv"><div class="tnum">1</div><div><div class="tt">재무/회계 (FP&amp;A)</div><div class="td2">자금 계획 및 집행, 급여 관리, 월별/분기별 재무 예측 및 보고, 전사 재무 건전성 모니터링</div></div></div>
+    <div class="tr rv"><div class="tnum">2</div><div><div class="tt">판매점 정산</div><div class="td2">전국 7,000개 오프라인 판매점 수익 정산, 정산 오류 검증 및 이의신청 처리, 정산 시스템 관리</div></div></div>
+    <div class="tr rv"><div class="tnum">3</div><div><div class="tt">USIM 물류 및 재고 관리</div><div class="td2">USIM 카드 발주·입고·출고·반납 등 전 물류 프로세스 관리, 실시간 재고 현황 모니터링 및 적정 재고 유지</div></div></div>
+    <div class="tr rv"><div class="tnum">4</div><div><div class="tt">인사/총무 &amp; 대관 (GA)</div><div class="td2">채용·온보딩·퇴직 등 HR 전반, 사무환경 관리(총무), 정부/규제기관 대응 및 컴플라이언스 관리</div></div></div>
+  </div>
+</div></section>
+<section class="ks s"><div class="wrap">
+  <div class="lbl">KEY NUMBERS</div><h2 class="ttl">경영지원의 숫자</h2>
+  <div class="kg rv">
+    <div class="kc"><span class="kv">7,000</span><div class="kl">정산 대상 오프라인 판매점</div></div>
+    <div class="kc"><span class="kv">4개</span><div class="kl">핵심 기능 (재무·정산·물류·HR)</div></div>
+    <div class="kc"><span class="kv">실시간</span><div class="kl">USIM 재고 무오차 관리</div></div>
+  </div>
+</div></section>
+<section class="cls s"><div class="wrap">
+  <div class="lbl">COLLABORATION</div><h2 class="ttl">협업 부서</h2>
+  <div class="cg rv">
+    <div class="cc"><div class="ccn"><div class="ccd"></div>영업</div><div class="ccp">USIM 재고 공급, 판매점 정산 데이터 처리 협력</div></div>
+    <div class="cc"><div class="ccn"><div class="ccd"></div>IT &amp; 정보보호</div><div class="ccp">정산 시스템 운영, IT 자산 관리 및 보안 정책 협력</div></div>
+    <div class="cc"><div class="ccn"><div class="ccd"></div>고객센터</div><div class="ccp">고객 환불·정산 이슈 처리 및 HR 지원</div></div>
+    <div class="cc"><div class="ccn"><div class="ccd"></div>사업전략&amp;마케팅</div><div class="ccp">마케팅 예산 집행 및 캠페인 정산 관리 협력</div></div>
+  </div>
+</div></section>
+<div class="bbar"><button class="bbtn" onclick="gomain()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>메인으로 돌아가기</button></div>
+</div>
+
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+  const isMain=id==='main';
+  document.getElementById('mnav').style.display=isMain?'flex':'none';
+  const nb=document.getElementById('nback');
+  nb.style.display=isMain?'none':'flex';
+  setTimeout(initReveal,60);
+}
+function gomain(){showPage('main')}
+function dept(k){showPage(k)}
+function sc(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'})}
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('shadow',window.scrollY>20);
+},{passive:true});
+function initReveal(){
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.12});
+  document.querySelectorAll('.page.active .rv').forEach(el=>{el.classList.remove('in');io.observe(el);});
+}
+document.addEventListener('DOMContentLoaded',initReveal);
+</script>
+</body>
+</html>
